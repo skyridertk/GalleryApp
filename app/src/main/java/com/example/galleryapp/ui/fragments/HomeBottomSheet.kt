@@ -1,11 +1,16 @@
 package com.example.galleryapp.ui.fragments
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -19,10 +24,17 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class HomeBottomSheet : BottomSheetDialogFragment() {
     lateinit var binding: BottomSheetItemBinding
 
-    val PICKFILE_RESULT_CODE = 123
-
     private val viewModel by viewModels<HomeViewModel> {
         HomeViewModelFactory()
+    }
+
+    companion object {
+        private const val TAG = "CameraXView"
+        private const val FILENAME = "yyyy-MM-dd-HH-mm-ss-SSS"
+        private const val PHOTO_EXTENSION = ".jpg"
+        private const val PICKFILE_RESULT_CODE = 123
+        private const val REQUEST_CODE_PERMISSIONS = 10
+        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
     }
 
     override fun onCreateView(
@@ -55,6 +67,37 @@ class HomeBottomSheet : BottomSheetDialogFragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        if (!allPermissionsGranted()) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                HomeBottomSheet.REQUIRED_PERMISSIONS,
+                HomeBottomSheet.REQUEST_CODE_PERMISSIONS
+            )
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == HomeBottomSheet.REQUEST_CODE_PERMISSIONS) {
+            if (!allPermissionsGranted()) {
+                Toast.makeText(context, "Permission not granted", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    private fun allPermissionsGranted() = HomeBottomSheet.REQUIRED_PERMISSIONS.all {
+        ContextCompat.checkSelfPermission(
+            requireContext(), it
+        ) == PackageManager.PERMISSION_GRANTED
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -88,9 +131,11 @@ class HomeBottomSheet : BottomSheetDialogFragment() {
 
                     viewModel.saveToFirestore(uriImages)
 
+
                     val action =
                         HomeBottomSheetDirections.actionHomeBottomSheetToHomeFragment("Uploading Images")
                     findNavController().navigate(action)
+
                 }
             }
         }

@@ -26,10 +26,18 @@
         <action
             android:id="@+id/action_homeBottomSheet_to_cameraFragment"
             app:destination="@id/cameraFragment"
+            app:enterAnim="@anim/in_from_right"
+            app:exitAnim="@anim/out_to_left"
+            app:popEnterAnim="@anim/out_to_left"
+            app:popExitAnim="@anim/out_to_right"
             app:popUpTo="@id/homeFragment" />
         <action
             android:id="@+id/action_homeBottomSheet_to_homeFragment"
             app:destination="@id/homeFragment"
+            app:enterAnim="@anim/in_from_right"
+            app:exitAnim="@anim/out_to_left"
+            app:popEnterAnim="@anim/in_from_left"
+            app:popExitAnim="@anim/out_to_right"
             app:popUpTo="@id/homeFragment" />
     </dialog>
     <fragment
@@ -39,6 +47,10 @@
         <action
             android:id="@+id/action_cameraFragment_to_homeFragment"
             app:destination="@id/homeFragment"
+            app:enterAnim="@anim/in_from_right"
+            app:exitAnim="@anim/out_to_left"
+            app:popEnterAnim="@anim/in_from_left"
+            app:popExitAnim="@anim/out_to_right"
             app:popUpTo="@id/homeFragment" />
     </fragment>
     <dialog

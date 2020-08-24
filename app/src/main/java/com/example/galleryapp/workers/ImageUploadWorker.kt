@@ -23,7 +23,7 @@ class ImageUploadWorker(appContext: Context, params: WorkerParameters) :
 
     private val context = applicationContext
     private val repository = Repository()
-    private var title: String = "Upload"
+    private var title: String = "Image Upload"
 
     override suspend fun doWork(): Result {
         val fileUri = Uri.fromFile(File(inputData.getString(KEY_IMAGE_URI)))

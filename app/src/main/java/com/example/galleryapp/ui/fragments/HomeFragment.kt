@@ -17,7 +17,6 @@ import com.example.galleryapp.ui.adapters.ImageListener
 import com.example.galleryapp.ui.adapters.ImagesAdapter
 import com.example.galleryapp.ui.viewmodels.HomeViewModel
 import com.example.galleryapp.ui.viewmodels.HomeViewModelFactory
-import com.google.android.material.snackbar.Snackbar
 
 class HomeFragment : Fragment() {
     private val viewModel by viewModels<HomeViewModel> {
@@ -49,9 +48,16 @@ class HomeFragment : Fragment() {
             imageAdapter.submitList(images)
         })
 
-        if (args.message.length > 0) {
-            Snackbar.make(binding.coordinator, args.message.toString(), Snackbar.LENGTH_LONG).show()
-        }
+//        viewModel.stateOfStackbar().observe(viewLifecycleOwner, Observer { event ->
+//            if(event) {
+//                Log.d("Snackbar", "Invocked")
+//                if (args.message.length > 0) {
+//                    Snackbar.make(binding.coordinator, args.message.toString(), Snackbar.LENGTH_LONG).show()
+//                }
+//
+//            }
+//        })
+
         binding.uploadButton.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToHomeBottomSheet()
             findNavController().navigate(action)

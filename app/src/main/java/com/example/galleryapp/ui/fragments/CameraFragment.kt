@@ -66,9 +66,6 @@ class CameraFragment : Fragment() {
         return binding.root
     }
 
-    private fun startUploading() {
-
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -121,6 +118,8 @@ class CameraFragment : Fragment() {
                         val action =
                             CameraFragmentDirections.actionCameraFragmentToHomeFragment("Uploading Image")
                         findNavController().navigate(action)
+
+
                     }
                 })
         }

@@ -20,7 +20,6 @@ class HomeViewModel : ViewModel() {
 
     val repository = Repository()
 
-
     fun saveToFirestore(ImageList: MutableList<String>) {
         repository.saveImageItem(ImageList)
     }
