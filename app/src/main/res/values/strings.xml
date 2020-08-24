@@ -6,6 +6,6 @@
 
     <string name="progress_uploading">Uploading Image…</string>
     <string name="upload_success">Image Upload finished Successfully! 🚀</string>
-    <string name="upload_failure">Image Uploading failed to upload the image 🚧. Please try to upload the image again.</string>
+    <string name="upload_failure">Image Uploading failed. Please try to upload the image again</string>
 
 </resources>

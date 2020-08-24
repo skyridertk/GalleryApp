@@ -115,7 +115,6 @@ class HomeBottomSheet : BottomSheetDialogFragment() {
                             val uri = data.clipData!!.getItemAt(i).uri
                             val result = uriPathHelper.getPath(requireContext(), uri)
 
-//                            uriImages.add(Uri.fromFile(File(result)))
                             uriImages.add(result!!)
                         }
                     } else {
@@ -123,7 +122,6 @@ class HomeBottomSheet : BottomSheetDialogFragment() {
                         if (uri != null) {
                             val result = uriPathHelper.getPath(requireContext(), uri)
 
-//                            uriImages.add(Uri.fromFile(File(result)))
                             uriImages.add(result!!)
                         }
 

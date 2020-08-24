@@ -48,16 +48,6 @@ class HomeFragment : Fragment() {
             imageAdapter.submitList(images)
         })
 
-//        viewModel.stateOfStackbar().observe(viewLifecycleOwner, Observer { event ->
-//            if(event) {
-//                Log.d("Snackbar", "Invocked")
-//                if (args.message.length > 0) {
-//                    Snackbar.make(binding.coordinator, args.message.toString(), Snackbar.LENGTH_LONG).show()
-//                }
-//
-//            }
-//        })
-
         binding.uploadButton.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToHomeBottomSheet()
             findNavController().navigate(action)

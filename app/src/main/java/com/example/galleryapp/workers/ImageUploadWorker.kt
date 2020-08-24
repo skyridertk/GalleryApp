@@ -4,7 +4,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.example.galleryapp.R
@@ -28,18 +27,14 @@ class ImageUploadWorker(appContext: Context, params: WorkerParameters) :
     override suspend fun doWork(): Result {
         val fileUri = Uri.fromFile(File(inputData.getString(KEY_IMAGE_URI)))
 
-        Log.d("Upload Test", "Runner filer $fileUri")
-
         fileUri?.let { uri ->
             repository.upload(uri) { result, percentage ->
                 when (result) {
                     is com.example.galleryapp.data.repository.Result.Success -> {
-                        Log.d("Upload Test", "Runner success ${result.data}")
                         showUploadFinishedNotification(result.data)
                     }
 
                     is com.example.galleryapp.data.repository.Result.Loading -> {
-                        Log.d("Upload Test", "Runner add $percentage")
                         showProgressNotification(
                             context.getString(R.string.progress_uploading),
                             percentage
@@ -47,9 +42,7 @@ class ImageUploadWorker(appContext: Context, params: WorkerParameters) :
                     }
 
                     is com.example.galleryapp.data.repository.Result.Error -> {
-                        Log.d("Upload Test", "Runner err")
                         showUploadFinishedNotification(null)
-
                     }
                 }
             }
@@ -72,11 +65,9 @@ class ImageUploadWorker(appContext: Context, params: WorkerParameters) :
     }
 
     private fun showUploadFinishedNotification(downloadUrl: Uri?) {
-        // Hide the progress notification
         Notifier
             .dismissNotification(context, title.hashCode())
 
-        Log.d("Upload Test", "$downloadUrl")
         if (downloadUrl != null) return
 
         val caption = context.getString(
@@ -92,7 +83,6 @@ class ImageUploadWorker(appContext: Context, params: WorkerParameters) :
             PendingIntent.FLAG_UPDATE_CURRENT
         )
 
-        Log.d("Upload Test", "Here")
         Notifier.show(context) {
             notificationId = title.hashCode()
             contentTitle = title

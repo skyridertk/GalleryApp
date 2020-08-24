@@ -2,7 +2,6 @@ package com.example.galleryapp.data.repository
 
 
 import android.net.Uri
-import android.util.Log
 import androidx.work.*
 import com.example.galleryapp.data.models.Image
 import com.example.galleryapp.workers.ImageUploadWorker
@@ -21,7 +20,6 @@ class Repository {
 
         while (uploads < ImageList.size) {
             val uri = ImageList.get(uploads)
-            Log.d("Type data", "${uri::class.simpleName}")
 
             addWorker(uri)
 
@@ -31,13 +29,10 @@ class Repository {
     }
 
     fun addWorker(uri: String) {
-        Log.d("Upload Test", "Invoked worker")
+
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
-
-        //val uriPathHelper = URIPathHelper()
-        //val result = uriPathHelper.getPath(context, uri)
 
         val oneTimeTask = OneTimeWorkRequestBuilder<ImageUploadWorker>()
             .setConstraints(constraints)
@@ -64,7 +59,6 @@ class Repository {
             .child("${Timestamp(System.currentTimeMillis())} - " + uri.lastPathSegment!!)
         imageRef.putFile(uri)
             .addOnProgressListener { taskSnapshot ->
-                Log.d("Upload Test", "Test add")
                 val progress = (100.0 * taskSnapshot.bytesTransferred) / taskSnapshot.totalByteCount
                 block?.invoke(Result.Loading, progress.toInt())
             }.continueWithTask { task ->
@@ -75,8 +69,8 @@ class Repository {
 
             }
             .addOnSuccessListener {
-                Log.d("Upload Test", "Test success $block")
-                imageRef.downloadUrl.addOnSuccessListener { uri ->
+
+            imageRef.downloadUrl.addOnSuccessListener { uri ->
                     firestoreRef.collection("images")
                         .add(Image(uri.lastPathSegment!!, uri.toString()))
                 }
@@ -84,8 +78,8 @@ class Repository {
                 block?.invoke(Result.Success(uri), 100)
             }
             .addOnFailureListener {
-                Log.d("Upload Test", "Test failure")
-                block?.invoke(Result.Error(it), 0)
+
+            block?.invoke(Result.Error(it), 0)
             }
 
 
@@ -102,13 +96,11 @@ class Repository {
             .get().addOnCompleteListener { data ->
 
                 for (document in data.result!!) {
-                    Log.d("Delete Request", "${document.data.get("imageName")}")
                     firestoreRef.collection("images").document(document.id).delete()
                     firebaseStorageRef.child(document.data.get("imageName").toString()).delete()
                 }
             }
 
-        Log.d("Delete Request", "$image")
     }
 }
 
@@ -117,8 +109,3 @@ sealed class Result<out R> {
     data class Error(val exception: Exception) : Result<Nothing>()
     object Loading : Result<Nothing>()
 }
-
-data class UploadingProgress(
-    val progress: Int = 0,
-    val result: Result<Boolean>
-)
