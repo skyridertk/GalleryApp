@@ -58,7 +58,9 @@ class CameraFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(layoutInflater, R.layout.fragment_camera, container, false)
 
-
+        binding.backClick.setOnClickListener {
+            onBackPressed()
+        }
         binding.button.setOnClickListener {
             takePhoto()
         }
@@ -66,6 +68,9 @@ class CameraFragment : Fragment() {
         return binding.root
     }
 
+    fun onBackPressed() {
+        requireActivity().onBackPressed()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

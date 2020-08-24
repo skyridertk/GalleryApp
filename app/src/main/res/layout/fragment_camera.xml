@@ -21,7 +21,7 @@
         </androidx.camera.view.PreviewView>
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/backClick"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="16dp"

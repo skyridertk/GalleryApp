@@ -34,7 +34,10 @@ class HomeBottomSheet : BottomSheetDialogFragment() {
         private const val PHOTO_EXTENSION = ".jpg"
         private const val PICKFILE_RESULT_CODE = 123
         private const val REQUEST_CODE_PERMISSIONS = 10
-        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+        private val REQUIRED_PERMISSIONS = arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
     }
 
     override fun onCreateView(
