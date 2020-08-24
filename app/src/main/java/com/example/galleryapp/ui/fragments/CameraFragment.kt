@@ -58,12 +58,16 @@ class CameraFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(layoutInflater, R.layout.fragment_camera, container, false)
 
+
         binding.button.setOnClickListener {
-//            Toast.makeText(requireContext(), "Clicked", Toast.LENGTH_SHORT).show()
             takePhoto()
         }
 
         return binding.root
+    }
+
+    private fun startUploading() {
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -83,8 +87,6 @@ class CameraFragment : Fragment() {
     }
 
     private fun takePhoto() {
-        Log.d("Camera", "Click")
-
         imageCapture?.let { imageCapture ->
             val photoFile = File(
                 outputDir,
@@ -110,12 +112,14 @@ class CameraFragment : Fragment() {
 
                         val uriPathHelper = URIPathHelper()
                         val result = uriPathHelper.getPath(requireContext(), savedUri)
-                        Log.d("Preview", result)
 
-                        viewModel.processUpload(mutableListOf<Uri>(savedUri))
+                        val list = mutableListOf<String>()
+                        list.add(result!!)
+
+                        viewModel.saveToFirestore(list)
 
                         val action =
-                            CameraFragmentDirections.actionCameraFragmentToPreviewFragment()
+                            CameraFragmentDirections.actionCameraFragmentToHomeFragment("Uploading Image")
                         findNavController().navigate(action)
                     }
                 })

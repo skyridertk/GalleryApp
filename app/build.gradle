@@ -94,4 +94,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
 
+    //Worker
+    def work_version = "1.0.1"
+    implementation "android.arch.work:work-runtime-ktx:$work_version"
 }

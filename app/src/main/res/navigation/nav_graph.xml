@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
     <fragment
@@ -10,10 +9,15 @@
         android:label="HomeFragment">
         <action
             android:id="@+id/action_homeFragment_to_homeBottomSheet"
-            app:destination="@id/homeBottomSheet" />
+            app:destination="@id/homeBottomSheet"
+            app:popUpTo="@id/homeFragment" />
         <action
             android:id="@+id/action_homeFragment_to_homeDialogFragment"
             app:destination="@id/homeDialogFragment" />
+        <argument
+            android:name="message"
+            app:argType="string"
+            android:defaultValue='""' />
     </fragment>
     <dialog
         android:id="@+id/homeBottomSheet"
@@ -24,8 +28,8 @@
             app:destination="@id/cameraFragment"
             app:popUpTo="@id/homeFragment" />
         <action
-            android:id="@+id/action_homeBottomSheet_to_previewFragment"
-            app:destination="@id/previewFragment"
+            android:id="@+id/action_homeBottomSheet_to_homeFragment"
+            app:destination="@id/homeFragment"
             app:popUpTo="@id/homeFragment" />
     </dialog>
     <fragment
@@ -33,17 +37,7 @@
         android:name="com.example.galleryapp.ui.fragments.CameraFragment"
         android:label="CameraFragment">
         <action
-            android:id="@+id/action_cameraFragment_to_previewFragment"
-            app:destination="@id/previewFragment"
-            app:popUpTo="@id/homeFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/previewFragment"
-        android:name="com.example.galleryapp.ui.fragments.PreviewFragment"
-        android:label="fragment_preview"
-        tools:layout="@layout/fragment_preview">
-        <action
-            android:id="@+id/action_previewFragment_to_homeFragment"
+            android:id="@+id/action_cameraFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/homeFragment" />
     </fragment>
