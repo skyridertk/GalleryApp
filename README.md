@@ -22,7 +22,7 @@ GalleryApp is a Firestore based image gallery
 WIP
 
 ## Libraries and tools
-<li><a href="https://developer.android.com/topic/libraries/architecture/navigation/">CameraX</a></li>
+<li><a href="https://developer.android.com/training/camerax">CameraX</a></li>
 <li><a href="https://developer.android.com/topic/libraries/architecture/navigation/">Navigation</a></li>
 <li><a href="https://developer.android.com/topic/libraries/architecture/viewmodel">ViewModel</a></li>
 <li><a href="https://developer.android.com/topic/libraries/architecture/livedata">LiveData</a></li>
